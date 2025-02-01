@@ -4,7 +4,7 @@ from Bayesian_RAG import generate_response
 def check_password():
     """
     Simple password protection using Streamlit secrets.
-    Ensure you have a .streamlit/secrets.toml file with:
+    Make sure you have a .streamlit/secrets.toml file with:
     
     [general]
     password = "your_simple_password"
@@ -15,7 +15,7 @@ def check_password():
             st.session_state["password_correct"] = True
         else:
             st.error("Password is incorrect")
-            st.stop()  # Stop execution if the password is wrong.
+            st.stop()  # Stop further execution if the password is wrong.
     return True
 
 def main():
