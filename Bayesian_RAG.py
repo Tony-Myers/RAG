@@ -1,6 +1,6 @@
 import os
 import pdfplumber
-# Use the bundled pysqlite3 if available to ensure a recent SQLite version
+# Use the bundled pysqlite3 if available to ensure a recent SQLite version.
 try:
     import pysqlite3 as sqlite3
 except ImportError:
@@ -11,7 +11,8 @@ import requests
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 from sentence_transformers import SentenceTransformer
 
-# Set your DeepSeek API key (you can also use st.secrets or environment variables)
+# Set your DeepSeek API key.
+# It is recommended to use an environment variable or secrets management.
 DEEPSEEK_API_KEY = os.environ.get("DEEPSEEK_API_KEY", "your_default_deepseek_api_key")
 
 # Initialize ChromaDB (Persistent Storage)
@@ -83,7 +84,7 @@ def generate_response(query):
     User Query: {query}
     """
     
-    # Replace the URL with the actual DeepSeek API endpoint if different.
+    # Replace with the actual DeepSeek API endpoint if different.
     url = "https://api.deepseek.ai/generate"
     payload = {
         "prompt": prompt,
