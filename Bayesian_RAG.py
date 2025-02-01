@@ -92,31 +92,27 @@ def generate_response(query):
             {"role": "system", "content": "You are a Bayesian statistics assistant."},
             {"role": "user", "content": prompt}
         ],
-        "max_tokens": 150
+        "model": "deepseek-moe-16b-chat",
+        "temperature": 0.35,
+        "top_p": 0.9,
+        "max_tokens": 1500,
+        "stop": ["# END"]
     }
+    
     headers = {
         "Content-Type": "application/json",
         "Authorization": f"Bearer {DEEPSEEK_API_KEY}"
     }
 
-            data = {
-          {
-      "model": "deepseek-moe-16b-chat",
-      "temperature": 0.35,
-      "top_p": 0.9,
-      "max_tokens": 1500,
-      "stop": ["# END"]
-    }
-    }
-    
     try:
         response = requests.post(DEEPSEEK_API_URL, json=payload, headers=headers)
         response.raise_for_status()
         result = response.json()
-        if "response" in result:
-            return result["response"]
+        # Corrected response parsing (assuming standard OpenAI-style response format)
+        if "choices" in result and len(result["choices"]) > 0:
+            return result["choices"][0]["message"]["content"]
         else:
-            print("DeepSeek response JSON did not contain 'response':", result)
+            print("DeepSeek response format unexpected:", result)
             return "DeepSeek API did not return a proper response."
     except Exception as e:
         print("Error generating response:", e)
