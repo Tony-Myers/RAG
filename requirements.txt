@@ -19,3 +19,4 @@ fastapi
 # Uvicorn as ASGI server (with standard extras for production use)
 uvicorn[standard]>=0.23.2
 
+pysqlite3-binary>=0.8.6
