@@ -9,7 +9,7 @@ from langchain.text_splitter import RecursiveCharacterTextSplitter
 from sentence_transformers import SentenceTransformer
 
 # Set your DeepSeek API key.
-# Preferably, set this as an environment variable (or via Streamlit secrets).
+# Preferably, set this as an environment variable or via Streamlit secrets.
 DEEPSEEK_API_KEY = os.environ.get("DEEPSEEK_API_KEY", "your_default_deepseek_api_key")
 
 # Initialize ChromaDB (Persistent Storage)
@@ -81,7 +81,7 @@ def generate_response(query):
     User Query: {query}
     """
     
-    # Replace this URL with the actual DeepSeek API endpoint if necessary.
+    # Replace with the actual DeepSeek API endpoint if necessary.
     url = "https://api.deepseek.ai/generate"
     payload = {
         "prompt": prompt,
@@ -98,7 +98,7 @@ def generate_response(query):
         result = response.json()
         return result.get("response", "No response from DeepSeek.")
     except Exception as e:
-        # Log detailed error for debugging.
+        # Print error details for debugging.
         print(f"Error generating response: {e}")
         try:
             print("Response text:", response.text)
