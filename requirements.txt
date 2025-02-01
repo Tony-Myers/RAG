@@ -17,4 +17,5 @@ sentence-transformers
 fastapi
 
 # Uvicorn as ASGI server (with standard extras for production use)
-uvicorn[standard
+uvicorn[standard]>=0.23.2
+
