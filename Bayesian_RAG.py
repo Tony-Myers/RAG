@@ -9,7 +9,6 @@ from langchain.text_splitter import RecursiveCharacterTextSplitter
 from sentence_transformers import SentenceTransformer
 
 # Set your DeepSeek API key.
-# It is recommended to use environment variables or secrets management.
 DEEPSEEK_API_KEY = os.environ.get("DEEPSEEK_API_KEY", "your_default_deepseek_api_key")
 
 # Initialize ChromaDB (Persistent Storage)
@@ -18,6 +17,8 @@ collection = chroma_client.get_or_create_collection("bayesian_docs")
 
 # Initialize Sentence Transformer Model
 embedding_model = SentenceTransformer("all-MiniLM-L6-v2")
+
+# ... (rest of your code as previously provided) ...
 
 ### Step 1: Extract Text from PDF ###
 def extract_text_from_pdf(pdf_path):
