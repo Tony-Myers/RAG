@@ -1,11 +1,12 @@
 # Bayesian_RAG_streamlit.py
+# Bayesian_RAG_streamlit.py
 import streamlit as st
 from Bayesian_RAG import generate_response
 
 def check_password():
     """
     Simple password protection using Streamlit secrets.
-    Make sure you have a .streamlit/secrets.toml file with:
+    Ensure you have a .streamlit/secrets.toml file with:
     
     [general]
     password = "your_simple_password"
