@@ -7,10 +7,12 @@ import chromadb
 import requests
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 from sentence_transformers import SentenceTransformer
+import streamlit as st  # For accessing st.secrets
 
-# Set your DeepSeek API key.
-# Preferably, set this as an environment variable or via Streamlit secrets.
-DEEPSEEK_API_KEY = os.environ.get("DEEPSEEK_API_KEY", "your_default_deepseek_api_key")
+# Retrieve your DeepSeek API key from Streamlit secrets
+DEEPSEEK_API_KEY = st.secrets["deepseek_api_key"]
+# Use the correct DeepSeek endpoint
+DEEPSEEK_API_URL = "https://api.deepseek.com/v1/chat/completions"
 
 # Initialize ChromaDB (Persistent Storage)
 chroma_client = chromadb.PersistentClient(path="./chroma_db")
@@ -81,11 +83,13 @@ def generate_response(query):
     User Query: {query}
     """
     
-    # Replace with the actual DeepSeek API endpoint if necessary.
-    url = "https://api.deepseek.ai/generate"
+    # Construct the payload as expected by DeepSeek's chat completions endpoint.
     payload = {
-        "prompt": prompt,
-        "max_tokens": 150,  # Adjust as needed.
+        "messages": [
+            {"role": "system", "content": "You are a Bayesian statistics assistant."},
+            {"role": "user", "content": prompt}
+        ],
+        "max_tokens": 150
     }
     headers = {
         "Content-Type": "application/json",
@@ -93,12 +97,11 @@ def generate_response(query):
     }
     
     try:
-        response = requests.post(url, json=payload, headers=headers)
+        response = requests.post(DEEPSEEK_API_URL, json=payload, headers=headers)
         response.raise_for_status()
         result = response.json()
         return result.get("response", "No response from DeepSeek.")
     except Exception as e:
-        # Print error details for debugging.
         print(f"Error generating response: {e}")
         try:
             print("Response text:", response.text)
