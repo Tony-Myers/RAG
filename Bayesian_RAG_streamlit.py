@@ -1,5 +1,4 @@
 # Bayesian_RAG_streamlit.py
-# Bayesian_RAG_streamlit.py
 import streamlit as st
 from Bayesian_RAG import generate_response
 
