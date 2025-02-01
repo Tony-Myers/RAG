@@ -1,25 +1,12 @@
-# PDF text extraction
-pdfplumber
-
-# Vector database storage
-chromadb
-
-# HTTP requests (used for DeepSeek API calls)
-requests
-
-# LangChain for text splitting (RecursiveCharacterTextSplitter)
-langchain
-
-# Text embeddings using SentenceTransformer
-sentence-transformers
-
-# FastAPI for building the API
-fastapi
-
-# Uvicorn as ASGI server (with standard extras for production use)
-uvicorn[standard]>=0.23.2
-
+pdfplumber==0.11.5
+chromadb==0.6.3
+requests==2.32.3
+langchain==0.3.17
+sentence-transformers==3.4.1
+fastapi==0.115.8
+uvicorn[standard]==0.34.0
+streamlit==1.41.1
 pysqlite3-binary==0.5.4
-torch>=2.7.0
 
+torch
 
