@@ -1,21 +1,15 @@
+# Bayesian_RAG.py
+import bootstrap  # Ensure the SQLite monkey-patch is applied first
+
 import os
 import pdfplumber
-
-# Attempt to use pysqlite3 to get a newer SQLite version.
-try:
-    import pysqlite3 as sqlite3
-    # Monkey-patch the sqlite_version attribute to a sufficiently high version.
-    sqlite3.sqlite_version = "3.41.0"
-except ImportError:
-    import sqlite3
-
 import chromadb
 import requests
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 from sentence_transformers import SentenceTransformer
 
 # Set your DeepSeek API key.
-# It is recommended to use an environment variable or secrets management.
+# It is recommended to use environment variables or secrets management.
 DEEPSEEK_API_KEY = os.environ.get("DEEPSEEK_API_KEY", "your_default_deepseek_api_key")
 
 # Initialize ChromaDB (Persistent Storage)
@@ -87,7 +81,7 @@ def generate_response(query):
     User Query: {query}
     """
     
-    # Replace the URL with the actual DeepSeek API endpoint if needed.
+    # Replace with the actual DeepSeek API endpoint if needed.
     url = "https://api.deepseek.ai/generate"
     payload = {
         "prompt": prompt,
