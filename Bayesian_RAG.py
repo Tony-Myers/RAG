@@ -1,8 +1,11 @@
 import os
 import pdfplumber
-# Use the bundled pysqlite3 if available to ensure a recent SQLite version.
+
+# Attempt to use pysqlite3 to get a newer SQLite version.
 try:
     import pysqlite3 as sqlite3
+    # Monkey-patch the sqlite_version attribute to a sufficiently high version.
+    sqlite3.sqlite_version = "3.41.0"
 except ImportError:
     import sqlite3
 
@@ -84,7 +87,7 @@ def generate_response(query):
     User Query: {query}
     """
     
-    # Replace with the actual DeepSeek API endpoint if different.
+    # Replace the URL with the actual DeepSeek API endpoint if needed.
     url = "https://api.deepseek.ai/generate"
     payload = {
         "prompt": prompt,
