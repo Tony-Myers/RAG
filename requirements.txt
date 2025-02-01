@@ -1,0 +1,20 @@
+# PDF text extraction
+pdfplumber
+
+# Vector database storage
+chromadb
+
+# HTTP requests (used for DeepSeek API calls)
+requests
+
+# LangChain for text splitting (RecursiveCharacterTextSplitter)
+langchain
+
+# Text embeddings using SentenceTransformer
+sentence-transformers
+
+# FastAPI for building the API
+fastapi
+
+# Uvicorn as ASGI server (with standard extras for production use)
+uvicorn[standard
