@@ -98,6 +98,16 @@ def generate_response(query):
         "Content-Type": "application/json",
         "Authorization": f"Bearer {DEEPSEEK_API_KEY}"
     }
+
+            data = {
+          {
+      "model": "deepseek-moe-16b-chat",
+      "temperature": 0.35,
+      "top_p": 0.9,
+      "max_tokens": 1500,
+      "stop": ["# END"]
+    }
+    }
     
     try:
         response = requests.post(DEEPSEEK_API_URL, json=payload, headers=headers)
