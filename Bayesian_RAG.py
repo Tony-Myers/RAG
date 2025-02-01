@@ -9,16 +9,16 @@ from langchain.text_splitter import RecursiveCharacterTextSplitter
 from sentence_transformers import SentenceTransformer
 import streamlit as st  # For accessing st.secrets
 
-# Retrieve your DeepSeek API key from Streamlit secrets
+# Retrieve your DeepSeek API key from Streamlit secrets.
 DEEPSEEK_API_KEY = st.secrets["deepseek_api_key"]
-# Use the correct DeepSeek endpoint
+# Use the correct DeepSeek endpoint.
 DEEPSEEK_API_URL = "https://api.deepseek.com/v1/chat/completions"
 
 # Initialize ChromaDB (Persistent Storage)
 chroma_client = chromadb.PersistentClient(path="./chroma_db")
 collection = chroma_client.get_or_create_collection("bayesian_docs")
 
-# Initialize Sentence Transformer Model
+# Initialize Sentence Transformer Model.
 embedding_model = SentenceTransformer("all-MiniLM-L6-v2")
 
 ### Step 1: Extract Text from PDF ###
@@ -69,10 +69,13 @@ def retrieve_documents(query, top_k=5):
     results = collection.query(query_embeddings=[query_embedding], n_results=top_k)
     return results["documents"][0] if results["documents"] else []
 
-### Step 6: Use DeepSeek to Generate Responses ###
+### Step 6: Use DeepSeek to Generate Responses (with debugging)
 def generate_response(query):
     relevant_docs = retrieve_documents(query)
     context = "\n\n".join(relevant_docs)
+    
+    if not context:
+        print("No relevant documents found for the query.")
     
     prompt = f"""
     You are an expert in Bayesian statistics.
@@ -83,7 +86,7 @@ def generate_response(query):
     User Query: {query}
     """
     
-    # Construct the payload as expected by DeepSeek's chat completions endpoint.
+    # Construct the payload for DeepSeek.
     payload = {
         "messages": [
             {"role": "system", "content": "You are a Bayesian statistics assistant."},
@@ -100,11 +103,15 @@ def generate_response(query):
         response = requests.post(DEEPSEEK_API_URL, json=payload, headers=headers)
         response.raise_for_status()
         result = response.json()
-        return result.get("response", "No response from DeepSeek.")
+        if "response" in result:
+            return result["response"]
+        else:
+            print("DeepSeek response JSON did not contain 'response':", result)
+            return "DeepSeek API did not return a proper response."
     except Exception as e:
-        print(f"Error generating response: {e}")
+        print("Error generating response:", e)
         try:
-            print("Response text:", response.text)
-        except Exception:
-            pass
+            print("HTTP Response content:", response.text)
+        except Exception as inner:
+            print("Could not retrieve response content:", inner)
         return "An error occurred while generating the response."
