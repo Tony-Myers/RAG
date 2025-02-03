@@ -1,4 +1,5 @@
 # Bayesian_RAG.py
+# Bayesian_RAG.py
 import bootstrap  # Ensure the SQLite monkey-patch is applied first
 
 import os
@@ -92,7 +93,7 @@ def generate_response(query):
             {"role": "system", "content": "You are a Bayesian statistics assistant."},
             {"role": "user", "content": prompt}
         ],
-        "model": "deepseek-chat",
+        "model": "deepseek-moe-16b-chat",
         "temperature": 0.35,
         "top_p": 0.9,
         "max_tokens": 1500,
@@ -114,10 +115,14 @@ def generate_response(query):
         else:
             print("DeepSeek response format unexpected:", result)
             return "DeepSeek API did not return a proper response."
-    except Exception as e:
-        print("Error generating response:", e)
+    except requests.exceptions.HTTPError as http_err:
+        print(f"HTTP error occurred: {http_err}")
         try:
             print("HTTP Response content:", response.text)
         except Exception as inner:
             print("Could not retrieve response content:", inner)
+        return "An HTTP error occurred while generating the response."
+    except Exception as e:
+        print("Error generating response:", e)
         return "An error occurred while generating the response."
+
