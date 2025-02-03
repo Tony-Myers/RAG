@@ -92,7 +92,7 @@ def generate_response(query):
             {"role": "system", "content": "You are a Bayesian statistics assistant."},
             {"role": "user", "content": prompt}
         ],
-        "model": "deepseek-moe-16b-chat",
+        "model": "deepseek-reasoner",
         "temperature": 0.35,
         "top_p": 0.9,
         "max_tokens": 1500,
