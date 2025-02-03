@@ -1,12 +1,12 @@
-pdfplumber==0.11.5
-chromadb==0.6.3
-requests==2.32.3
-langchain==0.3.17
-sentence-transformers==3.4.1
-fastapi==0.115.8
-uvicorn[standard]==0.34.0
-streamlit==1.41.1
-pysqlite3-binary==0.5.4
-torch==2.6.0
+pdfplumber
+chromadb
+requests
+langchain
+sentence-transformers
+fastapi
+uvicorn[standard]
+streamlit
+pysqlite3-binary
+torch
 
 
